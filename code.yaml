@@ -1,0 +1,40 @@
+import rospy
+from geometry_msgs.msg import Twist
+
+def move_turtle_square():
+    rospy.init_node('turtlesim_square_node', anonymous=True)
+    
+    # Init publisher
+    velocity_publisher = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=>
+    rospy.loginfo("Turtles are great at drawing squares!")
+
+    ########## YOUR CODE GOES HERE ##########
+    while not rospy.is_shutdown():
+        rate = rospy.Rate(0.25)  # Adjust the rate to control the speed of draw>
+
+        # Create a Twist message for moving forward 
+        forward_cmd = Twist() 
+        forward_cmd.linear.x = 2.0  # Linear velocity
+
+        # Create a Twist message for turning
+        turn_cmd = Twist()
+        turn_cmd.angular.z = 1.57  # Angular velocity for a 90-degree turn (adj>
+
+        # Move forward
+        for _ in range(4):
+            velocity_publisher.publish(forward_cmd)
+            rospy.sleep(2)
+
+            # Stop and turn
+            velocity_publisher.publish(Twist())  # Stop the turtle
+            rospy.sleep(1)
+            velocity_publisher.publish(turn_cmd)  # Turn the turtle
+            rospy.sleep(1)
+
+        ###########################################
+
+if _name_ == '_main_': 
+    try: 
+        move_turtle_square() 
+    except rospy.ROSInterruptException: 
+        pass
